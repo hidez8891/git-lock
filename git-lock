@@ -1,0 +1,22 @@
+#!/bin/sh
+
+function die() {
+	echo $@ >&2
+	exit 1
+}
+
+GIT_DIR=$(git rev-parse --git-dir) || exit
+
+case "$1" in
+	-u)
+		rm -f $GIT_DIR/index.lock
+		;;
+
+	-*)
+		die "Unknown option $1"
+		;;
+
+	*)
+		touch $GIT_DIR/index.lock
+esac
+
